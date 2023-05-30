@@ -30,6 +30,9 @@ function ExpensesOverview() {
         tabBarStyle: {
           backgroundColor: GlobalStyles.colors.primary100,
         },
+        tabBarLabelStyle: {
+          fontSize: 14,
+        },
         tabBarActiveTintColor: GlobalStyles.colors.btnColor,
         headerRight: ({tintColor}) => (
           <IconButton
