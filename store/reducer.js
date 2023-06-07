@@ -10,10 +10,10 @@ export const reducer = (state, action) => {
       const updateIndex = state.findIndex(
         item => item.id === action.payload.id,
       );
-      const updateItem = {...state[updateIndex], ...action.payload};
+      const updatedItem = {...state[updateIndex], ...action.payload.data};
       return [
         ...state.slice(0, updateIndex),
-        updateItem,
+        updatedItem,
         ...state.slice(updateIndex + 1),
       ];
     }
