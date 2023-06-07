@@ -15,6 +15,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {AllExpenses, ManageExpense, RecentExpenses} from './screens';
 import {IconButton} from './components/UI';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {ExpensesProvider} from './store/context';
 
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -86,29 +87,31 @@ function App() {
         translucent={true}
         backgroundColor={GlobalStyles.colors.primary100}
       />
-      <NavigationContainer style={styles.container}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="ExpensesOverview"
-            component={ExpensesOverview}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ManageExpense"
-            component={ManageExpense}
-            options={{
-              ...TransitionPresets.RevealFromBottomAndroid,
-              ...TransitionPresets.ModalPresentationIOS,
-              gestureEnabled: true,
-              presentation: 'modal',
-              headerStyle: {backgroundColor: GlobalStyles.colors.primary100},
-              headerTintColor: GlobalStyles.colors.textColor,
-              headerTitleAlign: 'center',
-              headerLeft: () => {},
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ExpensesProvider>
+        <NavigationContainer style={styles.container}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="ExpensesOverview"
+              component={ExpensesOverview}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ManageExpense"
+              component={ManageExpense}
+              options={{
+                ...TransitionPresets.RevealFromBottomAndroid,
+                ...TransitionPresets.ModalPresentationIOS,
+                gestureEnabled: true,
+                presentation: 'modal',
+                headerStyle: {backgroundColor: GlobalStyles.colors.primary100},
+                headerTintColor: GlobalStyles.colors.textColor,
+                headerTitleAlign: 'center',
+                headerLeft: () => {},
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ExpensesProvider>
     </>
   );
 }
