@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {GlobalStyles} from '../../constants/styles';
@@ -19,9 +19,7 @@ const ExpenseItem = ({id, description, date, amount}) => {
       <View style={styles.container}>
         <View>
           <Text style={[styles.text, styles.description]}>{description}</Text>
-          <Text style={styles.text}>{`${date.getDate()}-${
-            date.getMonth() + 1
-          }-${date.getFullYear()}`}</Text>
+          <Text style={styles.text}>{date.toISOString().slice(0, 10)}</Text>
         </View>
         <View style={styles.amountContainer}>
           <Text style={styles.amount}>${amount}</Text>
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 12,
     marginVertical: 8,
-    backgroundColor: GlobalStyles.colors.primary300,
+    backgroundColor: GlobalStyles.colors.primary200,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

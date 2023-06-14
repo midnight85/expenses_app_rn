@@ -2,12 +2,14 @@ import React from 'react';
 
 import {StyleSheet, View} from 'react-native';
 import {GlobalStyles} from '../constants/styles';
-import {CustomButton, IconButton} from '../components/UI';
+import {IconButton} from '../components/UI';
 import {useExpensesContext} from '../store/context';
+import {ExpenseForm} from '../components/ExpensesManage';
 
 const ManageExpense = ({route, navigation}) => {
-  const {addItem, removeItem, updateItem} = useExpensesContext();
+  const {state, addItem, removeItem, updateItem} = useExpensesContext();
   const editId = route.params?.id;
+  const editItem = state.find(item => item.id === editId);
   React.useLayoutEffect(
     () =>
       navigation.setOptions({
@@ -21,11 +23,11 @@ const ManageExpense = ({route, navigation}) => {
     navigation.goBack();
   }
 
-  function confirmHandler() {
+  function confirmHandler(obj) {
     if (editId) {
-      updateItem(editId, {description: `edited ${editId}`});
+      updateItem(editId, obj);
     } else {
-      addItem({description: `new item`, amount: 10, date: new Date()});
+      addItem(obj);
     }
     navigation.goBack();
   }
@@ -36,15 +38,13 @@ const ManageExpense = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonsContainer}>
-        <CustomButton mode="flat" onPress={cancelHandler} style={styles.button}>
-          Cancel
-        </CustomButton>
-        <CustomButton onPress={confirmHandler} style={styles.button}>
-          {editId ? 'Edit' : 'Add'}
-        </CustomButton>
-      </View>
-
+      <ExpenseForm
+        editId={editId}
+        editItem={editItem}
+        deleteItemHandler={deleteItemHandler}
+        confirmHandler={confirmHandler}
+        cancelHandler={cancelHandler}
+      />
       {editId && (
         <View style={styles.deleteContainer}>
           <IconButton
@@ -69,12 +69,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.accent,
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    columnGap: 20,
-  },
-  button: {minWidth: 120},
 });
 export default ManageExpense;

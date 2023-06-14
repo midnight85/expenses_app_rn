@@ -3,11 +3,12 @@ import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {GlobalStyles} from '../../constants/styles';
 
-const CustomButton = ({children, onPress, mode, style}) => {
+const CustomButton = ({children, onPress, mode, style, disabled}) => {
   return (
     <View style={style}>
       <Pressable
         onPress={onPress}
+        disabled={disabled}
         style={({pressed}) => pressed && styles.pressed}>
         <View style={[styles.container, mode === 'flat' && styles.flat]}>
           <Text style={[styles.text, mode === 'flat' && styles.flatText]}>
