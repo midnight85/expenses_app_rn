@@ -10,7 +10,7 @@ const ExpenseForm = ({editId, editItem, cancelHandler, confirmHandler}) => {
       isValid: !!editItem,
     },
     date: {
-      value: editId ? editItem.date.toISOString().slice(0, 10) : '',
+      value: editId ? editItem.date.slice(0, 10) : '',
       isValid: !!editItem,
     },
     description: {
@@ -28,9 +28,10 @@ const ExpenseForm = ({editId, editItem, cancelHandler, confirmHandler}) => {
   const onSubmit = () => {
     const obj = {
       amount: Number(formState.amount.value),
-      date: new Date(formState.date.value),
+      date: new Date(formState.date.value).toISOString(),
       description: formState.description.value,
     };
+    console.log(obj);
     const amountIsValid =
       !isNaN(obj.amount) && obj.amount.toString().length > 0;
     const dateIsValid = obj.date.toString() !== 'Invalid Date';

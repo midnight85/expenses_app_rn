@@ -1,9 +1,9 @@
-import {ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM} from './actions';
+import {ADD_ITEM, GET_ASYNCSTORAGE, REMOVE_ITEM, UPDATE_ITEM} from './actions';
 
 export const reducer = (state, action) => {
   switch (action.type) {
     case ADD_ITEM: {
-      const id = new Date().toString() + Math.random().toString();
+      const id = new Date().toISOString() + Math.random().toString();
       return [...state, {id, ...action.payload}];
     }
     case UPDATE_ITEM: {
@@ -19,6 +19,9 @@ export const reducer = (state, action) => {
     }
     case REMOVE_ITEM: {
       return [...state.filter(item => item.id !== action.payload)];
+    }
+    case GET_ASYNCSTORAGE: {
+      return [...action.payload];
     }
     default: {
       return state;

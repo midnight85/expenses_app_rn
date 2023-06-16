@@ -3,7 +3,6 @@ import React from 'react';
 import {GlobalStyles} from '../../constants/styles';
 
 const Input = ({label, style, isValid, textInputConfig}) => {
-  console.log(label, isValid);
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.label}>{label}</Text>

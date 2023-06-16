@@ -2,10 +2,9 @@ import React from 'react';
 
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {GlobalStyles} from '../../constants/styles';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const ExpenseItem = ({id, description, date, amount}) => {
-  const rout = useRoute();
   const navigation = useNavigation();
 
   function itemPressHandler() {
@@ -19,7 +18,9 @@ const ExpenseItem = ({id, description, date, amount}) => {
       <View style={styles.container}>
         <View>
           <Text style={[styles.text, styles.description]}>{description}</Text>
-          <Text style={styles.text}>{date.toISOString().slice(0, 10)}</Text>
+          <Text style={styles.text}>
+            {new Date(date).toISOString().slice(0, 10)}
+          </Text>
         </View>
         <View style={styles.amountContainer}>
           <Text style={styles.amount}>${amount}</Text>

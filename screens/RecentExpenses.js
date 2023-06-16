@@ -12,11 +12,12 @@ const RecentExpenses = () => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days);
   };
   const recentExpenses = state.filter(item => {
+    const itemDate = new Date(item.date);
     const today = new Date();
-    const sevenDays = getDateMinusDays(today, 12);
-    return item.date >= sevenDays && item.date <= today;
+    const sevenDays = getDateMinusDays(today, 7);
+    return itemDate >= sevenDays && itemDate <= today;
   });
-  return <ExpensesOutput periodName="Last 12 days" items={recentExpenses} />;
+  return <ExpensesOutput periodName="Last 7 days" items={recentExpenses} />;
 };
 const styles = StyleSheet.create({
   text: {

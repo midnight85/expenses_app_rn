@@ -15,12 +15,30 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {AllExpenses, ManageExpense, RecentExpenses} from './screens';
 import {IconButton} from './components/UI';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {ExpensesProvider} from './store/context';
+import {ExpensesProvider, useExpensesContext} from './store/context';
+import {readArrayFromStorage, updateAsyncStorage} from './store/asyncStorage';
 
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpensesOverview() {
+  const {state, setFromAsyncStorage} = useExpensesContext();
+
+  React.useEffect(() => {
+    const getAsyncStorage = async () => {
+      const newArray = await readArrayFromStorage();
+      console.log(newArray);
+      if (newArray.length) {
+        setFromAsyncStorage(newArray);
+      }
+    };
+    getAsyncStorage();
+  }, []);
+
+  React.useEffect(() => {
+    updateAsyncStorage(state);
+  }, [state]);
+
   return (
     <BottomTabs.Navigator
       initialRouteName="AllExpenses"
